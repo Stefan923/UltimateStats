@@ -26,6 +26,8 @@ public interface ItemUtils extends MessageUtils {
                 return player.getInventory().getItem(config.getInt("Inventory Slot"));
             } else if (config.getString("Item Type").equalsIgnoreCase("player-page")) {
                 return configToPageItemStack(config, player);
+            } else if (config.getString("Item Type").equalsIgnoreCase("simple-item")) {
+                return configToSimpleItemStack(config, player);
             }
         }
 
