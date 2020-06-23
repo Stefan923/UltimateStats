@@ -4,6 +4,7 @@ import me.Stefan923.UltimateStats.Commands.CommandManager;
 import me.Stefan923.UltimateStats.Configuration.LanguageManager;
 import me.Stefan923.UltimateStats.Configuration.SettingsManager;
 import me.Stefan923.UltimateStats.Inventory.InventoryManager;
+import me.Stefan923.UltimateStats.Listeners.PlayerInteractEntityListener;
 import me.Stefan923.UltimateStats.Utils.MessageUtils;
 import me.Stefan923.UltimateStats.Utils.Metrics;
 import me.Stefan923.UltimateStats.Utils.VersionUtils;
@@ -60,6 +61,10 @@ public class UltimateStats extends JavaPlugin implements MessageUtils, VersionUt
     private Integer enableListeners() {
         Integer i = 0;
         PluginManager pluginManager = getServer().getPluginManager();
+        if (settingsManager.getConfig().getBoolean("Open Stats Invetory.Methods.Right Click")) {
+            pluginManager.registerEvents(new PlayerInteractEntityListener(inventoryManager), this);
+            i++;
+        }
         return i;
     }
 
