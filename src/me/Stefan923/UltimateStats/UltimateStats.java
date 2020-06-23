@@ -3,11 +3,11 @@ package me.Stefan923.UltimateStats;
 import me.Stefan923.UltimateStats.Commands.CommandManager;
 import me.Stefan923.UltimateStats.Configuration.LanguageManager;
 import me.Stefan923.UltimateStats.Configuration.SettingsManager;
+import me.Stefan923.UltimateStats.Inventory.InventoryManager;
 import me.Stefan923.UltimateStats.Utils.MessageUtils;
 import me.Stefan923.UltimateStats.Utils.Metrics;
 import me.Stefan923.UltimateStats.Utils.VersionUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -20,8 +20,7 @@ public class UltimateStats extends JavaPlugin implements MessageUtils, VersionUt
     private SettingsManager settingsManager;
     private HashMap<String, LanguageManager> languageManagers;
     private CommandManager commandManager;
-
-    private HashMap<String, Inventory> openedInventories;
+    private InventoryManager inventoryManager;
 
     @Override
     public void onEnable() {
@@ -29,7 +28,7 @@ public class UltimateStats extends JavaPlugin implements MessageUtils, VersionUt
 
         settingsManager = SettingsManager.getInstance();
         settingsManager.setup(this);
-        openedInventories = new HashMap<>();
+        inventoryManager = new InventoryManager(this);
 
         languageManagers = new HashMap<>();
         for (String fileName : settingsManager.getConfig().getStringList("Languages.Available Languages")) {
@@ -95,9 +94,13 @@ public class UltimateStats extends JavaPlugin implements MessageUtils, VersionUt
         }
     }
 
+    public InventoryManager getInventoryManager() {
+        return inventoryManager;
+    }
+
     @Override
     public void onDisable() {
-        super.onDisable();
+        inventoryManager.closeAll();
     }
 
 }
