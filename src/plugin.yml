@@ -1,0 +1,22 @@
+name: UltimateStats
+version: 0.0.0
+main: me.Stefan923.UltimateStats.UltimateStats
+description: Customize the way you can see player's stats.
+softdepend: [PlaceholderAPI, SuperCore]
+authors: [Stefan923]
+
+commands:
+  ultimatestats:
+    description: Shows info about the plugin.
+    aliases: [ustats]
+  stats:
+    description: See someone's stats.
+    aliases: []
+
+permissions:
+  ultimatestats.admin:
+    description: Access to powerfull commands, like /ultimatestats reload.
+    default: op
+  ultimatestats.stats:
+    description: Access to stats command.
+    default: op

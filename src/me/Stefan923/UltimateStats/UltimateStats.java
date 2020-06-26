@@ -7,8 +7,10 @@ import me.Stefan923.UltimateStats.Inventory.InventoryManager;
 import me.Stefan923.UltimateStats.Listeners.PlayerInteractEntityListener;
 import me.Stefan923.UltimateStats.Utils.MessageUtils;
 import me.Stefan923.UltimateStats.Utils.Metrics;
+import me.Stefan923.UltimateStats.Utils.User;
 import me.Stefan923.UltimateStats.Utils.VersionUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -22,6 +24,8 @@ public class UltimateStats extends JavaPlugin implements MessageUtils, VersionUt
     private HashMap<String, LanguageManager> languageManagers;
     private CommandManager commandManager;
     private InventoryManager inventoryManager;
+
+    private HashMap<String, User> users;
 
     @Override
     public void onEnable() {
@@ -38,6 +42,8 @@ public class UltimateStats extends JavaPlugin implements MessageUtils, VersionUt
             languageManager.setup(this, fileName);
             languageManagers.put(fileName, languageManager);
         }
+
+        users = new HashMap<>();
 
         new Metrics(this, 7702);
 
@@ -62,7 +68,7 @@ public class UltimateStats extends JavaPlugin implements MessageUtils, VersionUt
         Integer i = 0;
         PluginManager pluginManager = getServer().getPluginManager();
         if (settingsManager.getConfig().getBoolean("Open Stats Invetory.Methods.Right Click")) {
-            pluginManager.registerEvents(new PlayerInteractEntityListener(inventoryManager), this);
+            pluginManager.registerEvents(new PlayerInteractEntityListener(instance, inventoryManager), this);
             i++;
         }
         return i;
@@ -108,4 +114,8 @@ public class UltimateStats extends JavaPlugin implements MessageUtils, VersionUt
         inventoryManager.closeAll();
     }
 
+    public User getUser(Player player) {
+        String name = player.getName();
+        return users.containsKey(name) ? users.get(name) : new User(player);
+    }
 }

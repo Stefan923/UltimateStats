@@ -26,6 +26,7 @@ public class SettingsManager {
         config.options().header("UltimateStats by Stefan923\n");
         config.addDefault("Languages.Default Language", "lang_en.yml");
         config.addDefault("Languages.Available Languages", Collections.singletonList("lang_en.yml"));
+        config.addDefault("Enabled Commands.Stats", true);
         config.addDefault("Open Stats Invetory.Methods.Right Click", true);
         config.addDefault("Open Stats Invetory.Methods.Shift Right Click", true);
         config.addDefault("Open Stats Invetory.Methods.Left Click", true);

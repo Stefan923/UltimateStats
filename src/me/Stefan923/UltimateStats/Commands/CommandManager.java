@@ -27,14 +27,14 @@ public class CommandManager implements CommandExecutor, MessageUtils, PlayerUtil
         this.instance = instance;
         this.tabManager = new TabManager(this);
 
-        instance.getCommand("UltimateStats").setExecutor(this);
+        instance.getCommand("ultimatestats").setExecutor(this);
 
         FileConfiguration settings = instance.getSettingsManager().getConfig();
 
         AbstractCommand commandUltimateStats = addCommand(new CommandUltimateStats());
 
-        if (settings.getBoolean("Enabled Commands.Vote")) {
-            instance.getCommand("vote").setExecutor(this);
+        if (settings.getBoolean("Enabled Commands.Stats")) {
+            instance.getCommand("stats").setExecutor(this);
             addCommand(new CommandStats());
         }
         addCommand(new CommandReload(commandUltimateStats));

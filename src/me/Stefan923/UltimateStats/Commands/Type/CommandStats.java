@@ -1,8 +1,10 @@
 package me.Stefan923.UltimateStats.Commands.Type;
 
 import me.Stefan923.UltimateStats.Commands.AbstractCommand;
+import me.Stefan923.UltimateStats.Inventory.StatsInventory;
 import me.Stefan923.UltimateStats.UltimateStats;
 import me.Stefan923.UltimateStats.Utils.MessageUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -16,9 +18,14 @@ public class CommandStats extends AbstractCommand implements MessageUtils {
 
     @Override
     protected ReturnType runCommand(UltimateStats instance, CommandSender sender, String... args) {
-        if (!(sender instanceof Player))
+        Player senderPlayer = (Player) sender;
+        Player targetPlayer = Bukkit.getPlayer(args[0]);
+        if (targetPlayer == null) {
             return ReturnType.FAILURE;
+        }
 
+        instance.getInventoryManager().getInventory(targetPlayer).open(senderPlayer, 0);
+        instance.getUser(senderPlayer).setWatching(true);
         return ReturnType.SUCCESS;
     }
 
