@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -38,22 +39,25 @@ public interface ItemUtils extends MessageUtils {
         ItemStack itemStack = new ItemStack(Material.valueOf(config.getString("Material")), 1);
         itemStack.setDurability((byte) config.getInt("Data"));
 
-        List<String> lores = config.getStringList("Lore");
-        lores.forEach(string -> string = replacePlaceholders(player, string.replace("%page%", String.valueOf(config.getInt("Next Page")))));
+        List<String> lores = new ArrayList<>();
+        config.getStringList("Lore").forEach(string -> lores.add(replacePlaceholders(player, string.replace("%page%", String.valueOf(config.getInt("Next Page"))))));
 
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.setDisplayName(config.getString("Display Name"));
         itemMeta.setLore(lores);
+        itemStack.setItemMeta(itemMeta);
+
         return itemStack;
     }
 
     default ItemStack configToFillItemStack(ConfigurationSection config, Player player) {
-        ItemStack itemStack = new ItemStack(Material.valueOf(config.getString("Fill Empty Slots.Item.Material")), 1);
-        itemStack.setDurability((byte) config.getInt("Fill Empty Slots.Item.Data"));
+        ItemStack itemStack = new ItemStack(Material.valueOf(config.getString("Material")), 1);
+        itemStack.setDurability((byte) config.getInt("Data"));
 
         ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.setDisplayName(config.getString("Fill Empty Slots.Item.Display Name"));
-        itemMeta.setLore(config.getStringList("Fill Empty Slots.Item.Lore"));
+        itemMeta.setDisplayName(config.getString("Display Name"));
+        itemMeta.setLore(config.getStringList("Lore"));
+        itemStack.setItemMeta(itemMeta);
 
         return itemStack;
     }
@@ -62,12 +66,14 @@ public interface ItemUtils extends MessageUtils {
         ItemStack itemStack = new ItemStack(Material.valueOf(config.getString("Material")), 1);
         itemStack.setDurability((byte) config.getInt("Data"));
 
-        List<String> lores = config.getStringList("Lore");
-        lores.forEach(string -> string = replacePlaceholders(player, string));
+        List<String> lores = new ArrayList<>();
+        config.getStringList("Lore").forEach(string -> lores.add(replacePlaceholders(player, string)));
 
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.setDisplayName(config.getString("Display Name"));
         itemMeta.setLore(lores);
+        itemStack.setItemMeta(itemMeta);
+
         return itemStack;
     }
 }
