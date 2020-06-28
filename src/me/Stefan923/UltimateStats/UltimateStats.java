@@ -7,6 +7,7 @@ import me.Stefan923.UltimateStats.Inventory.InventoryManager;
 import me.Stefan923.UltimateStats.Listeners.InventoryClickListener;
 import me.Stefan923.UltimateStats.Listeners.InventoryCloseListener;
 import me.Stefan923.UltimateStats.Listeners.PlayerInteractEntityListener;
+import me.Stefan923.UltimateStats.Listeners.PlayerJoinListener;
 import me.Stefan923.UltimateStats.Utils.MessageUtils;
 import me.Stefan923.UltimateStats.Utils.Metrics;
 import me.Stefan923.UltimateStats.Utils.User;
@@ -67,10 +68,12 @@ public class UltimateStats extends JavaPlugin implements MessageUtils, VersionUt
     }
 
     private Integer enableListeners() {
-        Integer i = 2;
+        Integer i = 4;
         PluginManager pluginManager = getServer().getPluginManager();
         pluginManager.registerEvents(new InventoryClickListener(instance), this);
         pluginManager.registerEvents(new InventoryCloseListener(instance), this);
+        pluginManager.registerEvents(new PlayerJoinListener(instance), this);
+        pluginManager.registerEvents(new PlayerJoinListener(instance), this);
         if (settingsManager.getConfig().getBoolean("Open Stats Invetory.Methods.Right Click")) {
             pluginManager.registerEvents(new PlayerInteractEntityListener(instance, inventoryManager), this);
             i++;
@@ -118,8 +121,23 @@ public class UltimateStats extends JavaPlugin implements MessageUtils, VersionUt
         inventoryManager.closeAll();
     }
 
+    public User addUser(Player player) {
+        User user = null;
+        if (users.containsKey(player.getName())) {
+            user = users.get(player.getName());
+        } else {
+            user = new User(player);
+            users.put(player.getName(), user);
+        }
+        return user;
+    }
+
+    public void removeUser(Player player) {
+        users.remove(player.getName());
+    }
+
     public User getUser(Player player) {
         String name = player.getName();
-        return users.containsKey(name) ? users.get(name) : new User(player);
+        return users.getOrDefault(name, null);
     }
 }
