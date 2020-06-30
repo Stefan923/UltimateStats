@@ -17,10 +17,12 @@ public interface PlayerUtils {
     }
 
     default FileConfiguration getLanguageConfig(UltimateStats instance, Player player) {
+        String defaultLanguage = instance.getSettingsManager().getConfig().getString("Languages.Default Language");
         if (Bukkit.getPluginManager().getPlugin("SuperCore").isEnabled()) {
-            return instance.getLanguageManager(SuperCoreAPI.getInstance().getUser(player.getName()).getLanguage()).getConfig();
+            String userLanguage = SuperCoreAPI.getInstance().getUser(player.getName()).getLanguage();
+            return instance.getLanguageManagers().containsKey(userLanguage) ? instance.getLanguageManager(userLanguage).getConfig() : instance.getLanguageManager(defaultLanguage).getConfig();
         }
-        return instance.getLanguageManager(instance.getSettingsManager().getConfig().getString("Languages.Default Language")).getConfig();
+        return instance.getLanguageManager(defaultLanguage).getConfig();
     }
 
     default FileConfiguration getLanguageConfig(UltimateStats instance) {
