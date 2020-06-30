@@ -25,7 +25,7 @@ public interface ItemUtils extends MessageUtils {
                 return player.getEquipment().getBoots();
             } else if (config.getString("Item Type").equalsIgnoreCase("player-item-on-slot")) {
                 return player.getInventory().getItem(config.getInt("Inventory Slot"));
-            } else if (config.getString("Item Type").equalsIgnoreCase("player-page")) {
+            } else if (config.getString("Item Type").equalsIgnoreCase("open-page")) {
                 return configToPageItemStack(config, player);
             } else if (config.getString("Item Type").equalsIgnoreCase("simple-item")) {
                 return configToSimpleItemStack(config, player);
@@ -40,10 +40,10 @@ public interface ItemUtils extends MessageUtils {
         itemStack.setDurability((byte) config.getInt("Data"));
 
         List<String> lores = new ArrayList<>();
-        config.getStringList("Lore").forEach(string -> lores.add(replacePlaceholders(player, string.replace("%page%", String.valueOf(config.getInt("Next Page"))))));
+        config.getStringList("Lore").forEach(string -> lores.add(formatAll(replacePlaceholders(player, string.replace("%page%", String.valueOf(config.getInt("Next Page")))))));
 
         ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.setDisplayName(config.getString("Display Name"));
+        itemMeta.setDisplayName(formatAll(config.getString("Display Name")));
         itemMeta.setLore(lores);
         itemStack.setItemMeta(itemMeta);
 
@@ -54,9 +54,12 @@ public interface ItemUtils extends MessageUtils {
         ItemStack itemStack = new ItemStack(Material.valueOf(config.getString("Material")), 1);
         itemStack.setDurability((byte) config.getInt("Data"));
 
+        List<String> lores = new ArrayList<>();
+        config.getStringList("Lore").forEach(string -> lores.add(formatAll(replacePlaceholders(player, string))));
+
         ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.setDisplayName(config.getString("Display Name"));
-        itemMeta.setLore(config.getStringList("Lore"));
+        itemMeta.setDisplayName(formatAll(config.getString("Display Name")));
+        itemMeta.setLore(lores);
         itemStack.setItemMeta(itemMeta);
 
         return itemStack;
@@ -67,10 +70,10 @@ public interface ItemUtils extends MessageUtils {
         itemStack.setDurability((byte) config.getInt("Data"));
 
         List<String> lores = new ArrayList<>();
-        config.getStringList("Lore").forEach(string -> lores.add(replacePlaceholders(player, string)));
+        config.getStringList("Lore").forEach(string -> lores.add(formatAll(replacePlaceholders(player, string))));
 
         ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.setDisplayName(config.getString("Display Name"));
+        itemMeta.setDisplayName(formatAll(config.getString("Display Name")));
         itemMeta.setLore(lores);
         itemStack.setItemMeta(itemMeta);
 
