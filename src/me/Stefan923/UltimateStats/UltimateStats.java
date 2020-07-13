@@ -4,10 +4,7 @@ import me.Stefan923.UltimateStats.Commands.CommandManager;
 import me.Stefan923.UltimateStats.Configuration.LanguageManager;
 import me.Stefan923.UltimateStats.Configuration.SettingsManager;
 import me.Stefan923.UltimateStats.Inventory.InventoryManager;
-import me.Stefan923.UltimateStats.Listeners.InventoryClickListener;
-import me.Stefan923.UltimateStats.Listeners.InventoryCloseListener;
-import me.Stefan923.UltimateStats.Listeners.PlayerInteractEntityListener;
-import me.Stefan923.UltimateStats.Listeners.PlayerJoinListener;
+import me.Stefan923.UltimateStats.Listeners.*;
 import me.Stefan923.UltimateStats.Utils.MessageUtils;
 import me.Stefan923.UltimateStats.Utils.Metrics;
 import me.Stefan923.UltimateStats.Utils.User;
@@ -73,7 +70,7 @@ public class UltimateStats extends JavaPlugin implements MessageUtils, VersionUt
         pluginManager.registerEvents(new InventoryClickListener(instance), this);
         pluginManager.registerEvents(new InventoryCloseListener(instance), this);
         pluginManager.registerEvents(new PlayerJoinListener(instance), this);
-        pluginManager.registerEvents(new PlayerJoinListener(instance), this);
+        pluginManager.registerEvents(new PlayerQuitListener(instance), this);
         if (settingsManager.getConfig().getBoolean("Open Stats Invetory.Methods.Right Click")) {
             pluginManager.registerEvents(new PlayerInteractEntityListener(instance, inventoryManager), this);
             i++;
