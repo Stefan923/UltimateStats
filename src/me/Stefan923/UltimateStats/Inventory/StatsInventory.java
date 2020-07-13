@@ -4,6 +4,7 @@ import me.Stefan923.UltimateStats.Utils.ItemUtils;
 import me.Stefan923.UltimateStats.Utils.MessageUtils;
 import me.Stefan923.UltimateStats.Utils.User;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -63,7 +64,11 @@ public class StatsInventory implements MessageUtils, ItemUtils {
 
             inventories.get(configurationSection.getInt("Page")).setItem(configurationSection.getInt("Slot"), itemStack);
             if (configurationSection.getString("Item Type").equalsIgnoreCase("open-page")) {
-                actions.put(configurationSection.getInt("Page") + configurationSection.getInt("Slot"), "open " + configurationSection.getInt("Next Page"));
+                actions.put(configurationSection.getInt("Page") * 54 + configurationSection.getInt("Slot"), "open " + configurationSection.getInt("Next Page"));
+            } else if (configurationSection.getString("Item Type").equalsIgnoreCase("close-page")) {
+                actions.put(configurationSection.getInt("Page") * 54 + configurationSection.getInt("Slot"), "close");
+            } else if (configurationSection.isSet("On Click Commands")) {
+                actions.put(configurationSection.getInt("Page") * 54 + configurationSection.getInt("Slot"), "commands " + String.join("/", configurationSection.getStringList("On Click Commands")).replace("%target%", player.getName()));
             }
         }
     }
@@ -121,6 +126,14 @@ public class StatsInventory implements MessageUtils, ItemUtils {
             if (action.startsWith("open")) {
                 player.closeInventory();
                 open(player, user, Integer.parseInt(action.replace("open ", "")));
+            } else if (action.startsWith("commands")) {
+                String[] commands = action.replace("commands ", "").split("/");
+                for (String command : commands) {
+                    Bukkit.dispatchCommand(player, command);
+                }
+                player.closeInventory();
+            } else if (action.startsWith("close")) {
+                player.closeInventory();
             }
         }
     }
