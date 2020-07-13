@@ -12,20 +12,26 @@ import java.util.List;
 
 
 public interface ItemUtils extends MessageUtils {
-    default ItemStack configToItemStack(ConfigurationSection config, Player player) {
+    default ItemStack configToItemStack(ConfigurationSection config, ConfigurationSection configEmpty, Player player) {
         if (config.isSet("Item Type")) {
             if (config.getString("Item Type").equalsIgnoreCase("player-hand")) {
-                return player.getItemInHand();
+                ItemStack itemStack = player.getItemInHand();
+                return itemStack.getType().equals(Material.AIR) ? configToFillItemStack(configEmpty, player) : itemStack;
             } else if (config.getString("Item Type").equalsIgnoreCase("player-helmet")) {
-                return player.getEquipment().getHelmet();
+                ItemStack itemStack = player.getEquipment().getHelmet();
+                return itemStack.getType().equals(Material.AIR) ? configToFillItemStack(configEmpty, player) : itemStack;
             } else if (config.getString("Item Type").equalsIgnoreCase("player-chestplate")) {
-                return player.getEquipment().getChestplate();
+                ItemStack itemStack = player.getEquipment().getChestplate();
+                return itemStack.getType().equals(Material.AIR) ? configToFillItemStack(configEmpty, player) : itemStack;
             } else if (config.getString("Item Type").equalsIgnoreCase("player-leggings")) {
-                return player.getEquipment().getLeggings();
+                ItemStack itemStack = player.getEquipment().getLeggings();
+                return itemStack.getType().equals(Material.AIR) ? configToFillItemStack(configEmpty, player) : itemStack;
             } else if (config.getString("Item Type").equalsIgnoreCase("player-boots")) {
-                return player.getEquipment().getBoots();
+                ItemStack itemStack = player.getEquipment().getBoots();
+                return itemStack.getType().equals(Material.AIR) ? configToFillItemStack(configEmpty, player) : itemStack;
             } else if (config.getString("Item Type").equalsIgnoreCase("player-item-on-slot")) {
-                return player.getInventory().getItem(config.getInt("Inventory Slot"));
+                ItemStack itemStack = player.getInventory().getItem(config.getInt("Inventory Slot"));
+                return itemStack.getType().equals(Material.AIR) ? configToFillItemStack(configEmpty, player) : itemStack;
             } else if (config.getString("Item Type").equalsIgnoreCase("player-head")) {
                 return configToSkullItemStack(config, player);
             } else if (config.getString("Item Type").equalsIgnoreCase("open-page")) {
