@@ -2,6 +2,7 @@ package me.Stefan923.UltimateStats.Inventory;
 
 import me.Stefan923.UltimateStats.Utils.ItemUtils;
 import me.Stefan923.UltimateStats.Utils.MessageUtils;
+import me.Stefan923.UltimateStats.Utils.User;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -10,32 +11,41 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class StatsInventory implements MessageUtils, ItemUtils {
+    StatsInventory instance;
     Player player;
 
     InventoryManager inventoryManager;
 
     private List<Inventory> inventories;
+    private HashMap<Integer, String> actions;
     private List<String> watchers;
 
     public StatsInventory(InventoryManager inventoryManager, Player player) {
         this.inventoryManager = inventoryManager;
         this.player = player;
-        inventories = new ArrayList<>();
-        watchers = new ArrayList<>();
+        this.inventories = new ArrayList<>();
+        this.watchers = new ArrayList<>();
+        this.actions = new HashMap<>();
+        this.instance = this;
 
         build();
 
         inventoryManager.addInventory(this);
     }
 
+    public StatsInventory getInstance() {
+        return instance;
+    }
+
     public void build() {
         FileConfiguration config = inventoryManager.getInventorySettingsManager().getConfig();
 
         for (int page = 0; page < config.getInt("Stats Menu Settings.Pages"); page++) {
-            Inventory inventory = Bukkit.createInventory(null, config.getInt("Stats Menu Settings.Per Page Slots"), formatAll(config.getString("Stats Menu Settings.Title").replace("{page}", String.valueOf(page + 1)).replace("{player}", player.getName())));
+            Inventory inventory = Bukkit.createInventory(null, config.getInt("Stats Menu Settings.Per Page Slots"), formatAll(config.getString("Stats Menu Settings.Title").replace("%page%", String.valueOf(page + 1)).replace("%player_name%", player.getName())));
 
             if (config.getBoolean("Fill Empty Slots.Enabled")) {
                 ItemStack fillItem = configToFillItemStack(config.getConfigurationSection("Fill Empty Slots.Item"), player);
@@ -52,16 +62,26 @@ public class StatsInventory implements MessageUtils, ItemUtils {
             ItemStack itemStack = configToItemStack(configurationSection, player);
 
             inventories.get(configurationSection.getInt("Page")).setItem(configurationSection.getInt("Slot"), itemStack);
+            if (configurationSection.getString("Item Type").equalsIgnoreCase("open-page")) {
+                actions.put(configurationSection.getInt("Page") + configurationSection.getInt("Slot"), "open " + configurationSection.getInt("Next Page"));
+            }
         }
     }
 
-    public void open(Player player, int page) {
+    public void open(Player player, User user, int page) {
         if (inventories.size() <= page) {
             return;
         }
 
-        player.openInventory(inventories.get(page));
+        String playerName = player.getName();
+        if (!watchers.contains(playerName)) {
+            watchers.add(playerName);
+        }
 
+        player.openInventory(inventories.get(page));
+        user.setWatching(true);
+        user.setInventoryPage(page);
+        user.setStatsInventory(this);
     }
 
     public void closeForAll() {
@@ -92,6 +112,16 @@ public class StatsInventory implements MessageUtils, ItemUtils {
 
         if (watchers.isEmpty()) {
             inventoryManager.removeInventory(this);
+        }
+    }
+
+    public void action(Player player, User user, int key) {
+        if (actions.containsKey(key)) {
+            String action = actions.get(key);
+            if (action.startsWith("open")) {
+                player.closeInventory();
+                open(player, user, Integer.parseInt(action.replace("open ", "")));
+            }
         }
     }
 }
