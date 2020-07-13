@@ -5,6 +5,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,11 @@ public interface ItemUtils extends MessageUtils {
                 return player.getEquipment().getBoots();
             } else if (config.getString("Item Type").equalsIgnoreCase("player-item-on-slot")) {
                 return player.getInventory().getItem(config.getInt("Inventory Slot"));
+            } else if (config.getString("Item Type").equalsIgnoreCase("player-head")) {
+                return configToSkullItemStack(config, player);
             } else if (config.getString("Item Type").equalsIgnoreCase("open-page")) {
+                return configToPageItemStack(config, player);
+            } else if (config.getString("Item Type").equalsIgnoreCase("close-page")) {
                 return configToPageItemStack(config, player);
             } else if (config.getString("Item Type").equalsIgnoreCase("simple-item")) {
                 return configToSimpleItemStack(config, player);
@@ -61,6 +66,22 @@ public interface ItemUtils extends MessageUtils {
         itemMeta.setDisplayName(formatAll(config.getString("Display Name")));
         itemMeta.setLore(lores);
         itemStack.setItemMeta(itemMeta);
+
+        return itemStack;
+    }
+
+    default ItemStack configToSkullItemStack(ConfigurationSection config, Player player) {
+        ItemStack itemStack = new ItemStack(Material.SKULL_ITEM, 1);
+        itemStack.setDurability((byte) 3);
+
+        List<String> lores = new ArrayList<>();
+        config.getStringList("Lore").forEach(string -> lores.add(formatAll(replacePlaceholders(player, string))));
+
+        SkullMeta skullMeta = (SkullMeta) itemStack.getItemMeta();
+        skullMeta.setDisplayName(formatAll(replacePlaceholders(player, config.getString("Display Name"))));
+        skullMeta.setLore(lores);
+        skullMeta.setOwner(player.getName());
+        itemStack.setItemMeta(skullMeta);
 
         return itemStack;
     }
