@@ -34,7 +34,7 @@ public class InventorySettingsManager {
         config.addDefault("Fill Empty Slots.Enabled", true);
 
         if (!exists) {
-            config.addDefault("Fill Empty Slots.Item.Display Name", "");
+            config.addDefault("Fill Empty Slots.Item.Display Name", " ");
             config.addDefault("Fill Empty Slots.Item.Material", "STAINED_GLASS_PANE");
             config.addDefault("Fill Empty Slots.Item.Data", 15);
             config.addDefault("Fill Empty Slots.Item.Lore", Collections.singletonList(""));
@@ -61,9 +61,9 @@ public class InventorySettingsManager {
             config.addDefault("Stats Menu Items.6-stats-1.Slot", 22);
             config.addDefault("Stats Menu Items.6-stats-1.Page", 0);
             config.addDefault("Stats Menu Items.6-stats-1.Display Name", "%vault_groupprefix% &f%player_name%");
-            config.addDefault("Stats Menu Items.6-stats-1.Lore", Arrays.asList("&8- &fKills: &6%statistic_player_kills%", "&8- &fDeaths: &6%statistic_deaths%"));
+            config.addDefault("Stats Menu Items.6-stats-1.Lore", Arrays.asList("", "  &6\u26c3 Wallet &f%vault_eco_balance_formatted%", "  &c\u2694 Player Kills &f%statistic_player_kills%", "  &9\u2620 Deaths &f%statistic_deaths%"));
             config.addDefault("Stats Menu Items.7-visit.Item Type", "simple-item");
-            config.addDefault("Stats Menu Items.8-trade.On Click Commands", Collections.singleton("is visit %target%"));
+            config.addDefault("Stats Menu Items.7-visit.On Click Commands", Collections.singleton("is visit %target%"));
             config.addDefault("Stats Menu Items.7-visit.Slot", 15);
             config.addDefault("Stats Menu Items.7-visit.Page", 0);
             config.addDefault("Stats Menu Items.7-visit.Display Name", "&aVisit Island");
@@ -79,21 +79,21 @@ public class InventorySettingsManager {
             config.addDefault("Stats Menu Items.8-trade.Data", 0);
             config.addDefault("Stats Menu Items.8-trade.Lore", Collections.singletonList("&eSend a trade request!"));
             config.addDefault("Stats Menu Items.9-invite.Item Type", "simple-item");
-            config.addDefault("Stats Menu Items.8-trade.On Click Commands", Collections.singleton("is invite %target%"));
+            config.addDefault("Stats Menu Items.9-invite.On Click Commands", Collections.singleton("is invite %target%"));
             config.addDefault("Stats Menu Items.9-invite.Slot", 24);
             config.addDefault("Stats Menu Items.9-invite.Page", 0);
             config.addDefault("Stats Menu Items.9-invite.Display Name", "&aInvite to Island");
             config.addDefault("Stats Menu Items.9-invite.Material", "RED_ROSE");
             config.addDefault("Stats Menu Items.9-invite.Data", 0);
             config.addDefault("Stats Menu Items.9-invite.Lore", Collections.singletonList("&eClick to invite!"));
-            config.addDefault("Stats Menu Items.10-invite.Item Type", "simple-item");
-            config.addDefault("Stats Menu Items.8-trade.On Click Commands", Collections.singleton("is coop %target%"));
-            config.addDefault("Stats Menu Items.10-invite.Slot", 25);
-            config.addDefault("Stats Menu Items.10-invite.Page", 0);
-            config.addDefault("Stats Menu Items.10-invite.Display Name", "&aCo-op Request");
-            config.addDefault("Stats Menu Items.10-invite.Material", "DIAMOND");
-            config.addDefault("Stats Menu Items.10-invite.Data", 0);
-            config.addDefault("Stats Menu Items.10-invite.Lore", Collections.singletonList("&eSend a co-op request!"));
+            config.addDefault("Stats Menu Items.10-coop.Item Type", "simple-item");
+            config.addDefault("Stats Menu Items.10-coop.On Click Commands", Collections.singleton("is coop %target%"));
+            config.addDefault("Stats Menu Items.10-coop.Slot", 25);
+            config.addDefault("Stats Menu Items.10-coop.Page", 0);
+            config.addDefault("Stats Menu Items.10-coop.Display Name", "&aCo-op Request");
+            config.addDefault("Stats Menu Items.10-coop.Material", "DIAMOND");
+            config.addDefault("Stats Menu Items.10-coop.Data", 0);
+            config.addDefault("Stats Menu Items.10-coop.Lore", Collections.singletonList("&eSend a co-op request!"));
             config.addDefault("Stats Menu Items.11-next-page-1.Item Type", "open-page");
             config.addDefault("Stats Menu Items.11-next-page-1.Next Page", 1);
             config.addDefault("Stats Menu Items.11-next-page-1.Slot", 50);
@@ -116,11 +116,11 @@ public class InventorySettingsManager {
             config.addDefault("Stats Menu Items.13-close-page-1.Display Name", "&cClose");
             config.addDefault("Stats Menu Items.13-close-page-1.Material", "BARRIER");
             config.addDefault("Stats Menu Items.13-close-page-1.Data", 0);
-            config.addDefault("Stats Menu Items.13-close-page-1.Lore", Arrays.asList("", "&8&o- Close the stats menu."));
+            config.addDefault("Stats Menu Items.13-close-page-1.Lore", Arrays.asList("", "&7&o- Close the stats menu."));
             config.addDefault("Stats Menu Items.14-close-page-2.Item Type", "close-page");
             config.addDefault("Stats Menu Items.14-close-page-2.Slot", 49);
             config.addDefault("Stats Menu Items.14-close-page-2.Page", 1);
-            config.addDefault("Stats Menu Items.14-close-page-2.Display Name", "&c&lClose");
+            config.addDefault("Stats Menu Items.14-close-page-2.Display Name", "&cClose");
             config.addDefault("Stats Menu Items.14-close-page-2.Material", "BARRIER");
             config.addDefault("Stats Menu Items.14-close-page-2.Data", 0);
             config.addDefault("Stats Menu Items.14-close-page-2.Lore", Arrays.asList("", "&7&o- Close the stats menu."));
