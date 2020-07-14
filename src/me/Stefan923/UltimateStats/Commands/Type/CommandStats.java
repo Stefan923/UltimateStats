@@ -1,9 +1,9 @@
 package me.Stefan923.UltimateStats.Commands.Type;
 
 import me.Stefan923.UltimateStats.Commands.AbstractCommand;
-import me.Stefan923.UltimateStats.Inventory.StatsInventory;
 import me.Stefan923.UltimateStats.UltimateStats;
 import me.Stefan923.UltimateStats.Utils.MessageUtils;
+import me.Stefan923.UltimateStats.Utils.User;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -13,7 +13,7 @@ import java.util.List;
 public class CommandStats extends AbstractCommand implements MessageUtils {
 
     public CommandStats() {
-        super(true, false, "stats");
+        super(true, true, "stats");
     }
 
     @Override
@@ -23,9 +23,12 @@ public class CommandStats extends AbstractCommand implements MessageUtils {
         if (targetPlayer == null) {
             return ReturnType.FAILURE;
         }
-
-        instance.getInventoryManager().getInventory(targetPlayer).open(senderPlayer, 0);
-        instance.getUser(senderPlayer).setWatching(true);
+        if (targetPlayer.getName() == senderPlayer.getName()) {
+            return ReturnType.FAILURE;
+        }
+        User user = instance.getUser(senderPlayer);
+        
+        instance.getInventoryManager().getInventory(targetPlayer).open(senderPlayer, user, 0);
         return ReturnType.SUCCESS;
     }
 

@@ -25,6 +25,7 @@ public class TabManager implements TabCompleter {
                 List<String> tempStrings = abstractCommand.onTab(instance, sender, strings);
                 if (tempStrings != null)
                     tabStrings.addAll(tempStrings);
+                System.out.println();
             }
         }
         return tabStrings.isEmpty() ? null : tabStrings;

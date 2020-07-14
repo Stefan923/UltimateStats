@@ -9,10 +9,12 @@ public class User {
     private boolean watching;
 
     private StatsInventory statsInventory;
+    private Integer inventoryPage;
 
     public User(Player player) {
         this.player = player;
         this.statsInventory = null;
+        this.inventoryPage = 0;
         this.watching = false;
     }
 
@@ -30,5 +32,13 @@ public class User {
 
     public void setStatsInventory(StatsInventory statsInventory) {
         this.statsInventory = statsInventory;
+    }
+
+    public Integer getInventoryPage() {
+        return inventoryPage;
+    }
+
+    public void setInventoryPage(Integer inventoryPage) {
+        this.inventoryPage = inventoryPage;
     }
 }

@@ -6,7 +6,6 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class InventoryManager {
@@ -20,6 +19,7 @@ public class InventoryManager {
         this.instance = instance;
 
         inventorySettingsManager = InventorySettingsManager.getInstance();
+        inventorySettingsManager.setup(instance);
         statsInventories = new ArrayList<>();
     }
 

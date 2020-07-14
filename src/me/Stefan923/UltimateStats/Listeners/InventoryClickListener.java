@@ -19,9 +19,11 @@ public class InventoryClickListener implements Listener {
     public void onInventoryClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
         User user = instance.getUser(player);
-        if (!user.isWatching()) {
+        if (!user.isWatching() || event.getClickedInventory().equals(player.getInventory())) {
             return;
         }
+
+        user.getStatsInventory().action(player, user, user.getInventoryPage() * 54 + event.getSlot());
 
         event.setCancelled(true);
     }

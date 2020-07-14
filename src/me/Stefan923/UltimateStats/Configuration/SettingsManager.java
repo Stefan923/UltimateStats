@@ -28,9 +28,6 @@ public class SettingsManager {
         config.addDefault("Languages.Available Languages", Collections.singletonList("lang_en.yml"));
         config.addDefault("Enabled Commands.Stats", true);
         config.addDefault("Open Stats Invetory.Methods.Right Click", true);
-        config.addDefault("Open Stats Invetory.Methods.Shift Right Click", true);
-        config.addDefault("Open Stats Invetory.Methods.Left Click", true);
-        config.addDefault("Open Stats Invetory.Methods.Shift Left Click", true);
         config.addDefault("Update Checker.Enable.On Plugin Enable", true);
         config.addDefault("Update Checker.Enable.On Join", true);
         config.options().copyDefaults(true);

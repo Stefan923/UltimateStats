@@ -58,9 +58,10 @@ public class StatsInventory implements MessageUtils, ItemUtils {
             inventories.add(inventory);
         }
 
+        ConfigurationSection configEmpty = config.getConfigurationSection("Empty Player Slot.Item");
         for (String key : config.getConfigurationSection("Stats Menu Items").getKeys(false)) {
             ConfigurationSection configurationSection = config.getConfigurationSection("Stats Menu Items." + key);
-            ItemStack itemStack = configToItemStack(configurationSection, player);
+            ItemStack itemStack = configToItemStack(configurationSection, configEmpty, player);
 
             inventories.get(configurationSection.getInt("Page")).setItem(configurationSection.getInt("Slot"), itemStack);
             if (configurationSection.getString("Item Type").equalsIgnoreCase("open-page")) {

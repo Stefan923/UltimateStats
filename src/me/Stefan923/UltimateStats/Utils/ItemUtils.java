@@ -19,19 +19,19 @@ public interface ItemUtils extends MessageUtils {
                 return itemStack.getType().equals(Material.AIR) ? configToFillItemStack(configEmpty, player) : itemStack;
             } else if (config.getString("Item Type").equalsIgnoreCase("player-helmet")) {
                 ItemStack itemStack = player.getEquipment().getHelmet();
-                return itemStack.getType().equals(Material.AIR) ? configToFillItemStack(configEmpty, player) : itemStack;
+                return itemStack == null ? configToFillItemStack(configEmpty, player) : itemStack;
             } else if (config.getString("Item Type").equalsIgnoreCase("player-chestplate")) {
                 ItemStack itemStack = player.getEquipment().getChestplate();
-                return itemStack.getType().equals(Material.AIR) ? configToFillItemStack(configEmpty, player) : itemStack;
+                return itemStack == null ? configToFillItemStack(configEmpty, player) : itemStack;
             } else if (config.getString("Item Type").equalsIgnoreCase("player-leggings")) {
                 ItemStack itemStack = player.getEquipment().getLeggings();
-                return itemStack.getType().equals(Material.AIR) ? configToFillItemStack(configEmpty, player) : itemStack;
+                return itemStack == null ? configToFillItemStack(configEmpty, player) : itemStack;
             } else if (config.getString("Item Type").equalsIgnoreCase("player-boots")) {
                 ItemStack itemStack = player.getEquipment().getBoots();
-                return itemStack.getType().equals(Material.AIR) ? configToFillItemStack(configEmpty, player) : itemStack;
+                return itemStack == null ? configToFillItemStack(configEmpty, player) : itemStack;
             } else if (config.getString("Item Type").equalsIgnoreCase("player-item-on-slot")) {
                 ItemStack itemStack = player.getInventory().getItem(config.getInt("Inventory Slot"));
-                return itemStack.getType().equals(Material.AIR) ? configToFillItemStack(configEmpty, player) : itemStack;
+                return itemStack == null ? configToFillItemStack(configEmpty, player) : itemStack;
             } else if (config.getString("Item Type").equalsIgnoreCase("player-head")) {
                 return configToSkullItemStack(config, player);
             } else if (config.getString("Item Type").equalsIgnoreCase("open-page")) {

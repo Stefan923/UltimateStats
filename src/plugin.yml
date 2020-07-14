@@ -1,5 +1,5 @@
 name: UltimateStats
-version: 0.0.0
+version: 1.0.0
 main: me.Stefan923.UltimateStats.UltimateStats
 description: Customize the way you can see player's stats.
 softdepend: [PlaceholderAPI, SuperCore]
