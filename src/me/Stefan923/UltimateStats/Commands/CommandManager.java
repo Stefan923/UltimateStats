@@ -85,7 +85,7 @@ public class CommandManager implements CommandExecutor, MessageUtils, PlayerUtil
                     sender.sendMessage(formatAll(languageConfig.getString("General.No Permission").replace("%permission%", e.getMessage())));
                 }
                 if (returnType == AbstractCommand.ReturnType.SYNTAX_ERROR) {
-                    sender.sendMessage(formatAll(languageConfig.getString("General.Invalid Command Syntax").replace("%syntax%", command.getSyntax())));
+                    sender.sendMessage(formatAll(languageConfig.getString("Command.Invalid Command Syntax").replace("%syntax%", command.getSyntax())));
                 }
                 return;
             }
@@ -104,7 +104,7 @@ public class CommandManager implements CommandExecutor, MessageUtils, PlayerUtil
                 e.printStackTrace();
             }
             if (returnType == AbstractCommand.ReturnType.SYNTAX_ERROR) {
-                sender.sendMessage(formatAll(languageConfig.getString("General.Invalid Command Syntax").replace("%syntax%", command.getSyntax())));
+                sender.sendMessage(formatAll(languageConfig.getString("Command.Invalid Command Syntax").replace("%syntax%", command.getSyntax())));
             }
             return;
         }
