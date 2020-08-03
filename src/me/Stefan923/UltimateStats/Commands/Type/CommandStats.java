@@ -3,6 +3,7 @@ package me.Stefan923.UltimateStats.Commands.Type;
 import me.Stefan923.UltimateStats.Commands.AbstractCommand;
 import me.Stefan923.UltimateStats.UltimateStats;
 import me.Stefan923.UltimateStats.Utils.MessageUtils;
+import me.Stefan923.UltimateStats.Utils.PlayerUtils;
 import me.Stefan923.UltimateStats.Utils.User;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -10,7 +11,7 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class CommandStats extends AbstractCommand implements MessageUtils {
+public class CommandStats extends AbstractCommand implements MessageUtils, PlayerUtils {
 
     public CommandStats() {
         super(true, true, "stats");
@@ -21,9 +22,11 @@ public class CommandStats extends AbstractCommand implements MessageUtils {
         Player senderPlayer = (Player) sender;
         Player targetPlayer = Bukkit.getPlayer(args[0]);
         if (targetPlayer == null) {
+            senderPlayer.sendMessage(formatAll(getLanguageConfig(instance, senderPlayer).getString("General.Must Be Online")));
             return ReturnType.FAILURE;
         }
-        if (targetPlayer.getName() == senderPlayer.getName()) {
+        if (targetPlayer.getName().equals(senderPlayer.getName())) {
+            senderPlayer.sendMessage(formatAll(getLanguageConfig(instance, senderPlayer).getString("General.Can Not Watch Own Stats")));
             return ReturnType.FAILURE;
         }
         User user = instance.getUser(senderPlayer);

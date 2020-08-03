@@ -41,6 +41,7 @@ public class LanguageManager implements MessageUtils {
         config = YamlConfiguration.loadConfiguration(cfile);
         config.options().header("UltimateStats by Stefan923.\n");
         config.addDefault("Command.Invalid Command Syntax", "&8(&3!&8) &cInvalid Syntax or you have no permission!\n&8(&3!&8) &fThe valid syntax is: &b%syntax%");
+        config.addDefault("General.Can Not See Own Stats", "&8(&3!&8) &cYou can't see your own stats!");
         config.addDefault("General.Must Be Online", "&8(&3!&8) &cSpecified player must be online!");
         config.addDefault("General.Must Be Player", "&8(&3!&8) &cYou must be a player to do this!");
         config.addDefault("General.No Permission", "&8(&3!&8) &cYou need the &4%permission% &cpermission to do that!");
